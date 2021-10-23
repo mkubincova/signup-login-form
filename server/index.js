@@ -1,9 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const mongoose = require('mongoose');
 const { stringify } = require('querystring');
-const User = require('./models/user')
+const User = require('./models/user');
 
 
 const PORT = process.env.PORT || 3001;
@@ -12,29 +13,37 @@ const app = express();
 
 // Have Node serve the files for our built React app
 app.use(express.static(path.resolve(__dirname, '../client/build')));
-app.use(bodyParser.urlencoded({extended: true}));
+
+// configure the app to use bodyParser()
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 //connect to mongoDB
-const dbURI = 'mongodb+srv://magda:bBoo91tDt-1@users.2n2n4.mongodb.net/signup-login?retryWrites=true&w=majority';
+const dbURI = 'mongodb+srv://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD + '@users.2n2n4.mongodb.net/signup-login?retryWrites=true&w=majority';
 mongoose.connect(dbURI, {useNewUrlParser: true})
     .then((result) => {app.listen(PORT, () => {console.log(`Server listening on ${PORT}`);});})
     .catch((err) => {console.log(err);})
 
 
-//Test connection
-app.get("/api", (req, res) => {
+//Signup form submit
+app.post("/signup", (req, res) => {
+
     const user = new User({
-        name: "John",
-        email: "jong@gmail.com",
-        password: "psw123"
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
     });
 
     user.save()
         .then((result) => {
-            res.send(result)
+            console.log(result)
+            res.json({message: "Success"})
         })
         .catch((err) => {
             console.log(err)
+            res.json({message: "Failure"})
         })
 })
 
