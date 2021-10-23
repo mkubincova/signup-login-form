@@ -55,7 +55,7 @@ function Form() {
         <small>{errors.email ? errors.email : ""}</small>
 
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" value={password} onChange={handleChange} className={errors.email ? "red" : null}/>
+        <input type="password" id="password" value={password} onChange={handleChange} className={errors.password ? "red" : null}/>
         <small>{errors.password ? errors.password : ""}</small>
 
         <button type="submit">Submit</button>
