@@ -42,23 +42,21 @@ function Form() {
         setEmail("");
         setPassword("");
     }
-   
-    
   }
 
   return (
     <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label><br/>
-        <input type="text" id="name" placeholder="John" value={name} onChange={handleChange}/><br/>
-        <small>{errors.name ? errors.name : ""}</small><br/>
+        <label htmlFor="name">Name</label>
+        <input type="text" id="name" placeholder="John" value={name} onChange={handleChange} className={errors.name ? "red" : null}/>
+        <small>{errors.name ? errors.name : ""}</small>
 
-        <label htmlFor="email">Email</label><br/>
-        <input type="email" id="email" placeholder="john@gmail.com" value={email} onChange={handleChange}/><br/>
-        <small>{errors.email ? errors.email : ""}</small><br/>
+        <label htmlFor="email">Email</label>
+        <input type="text" id="email" placeholder="john@gmail.com" value={email} onChange={handleChange} className={errors.email ? "red" : null}/>
+        <small>{errors.email ? errors.email : ""}</small>
 
-        <label htmlFor="password">Password</label><br/>
-        <input type="password" id="password" placeholder="somelongpassword" value={password} onChange={handleChange}/><br/>
-        <small>{errors.password ? errors.password : ""}</small><br/>
+        <label htmlFor="password">Password</label>
+        <input type="password" id="password" value={password} onChange={handleChange} className={errors.email ? "red" : null}/>
+        <small>{errors.password ? errors.password : ""}</small>
 
         <button type="submit">Submit</button>
     </form>
