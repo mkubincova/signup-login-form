@@ -26,7 +26,7 @@ h1{
   margin-top: 0;
   color: rgb(0, 116, 151);
 }
-form{
+form, div.success, div.failure, div.welcome{
   min-width: 250px;
 }
 input{
@@ -70,4 +70,22 @@ button{
 }
 button:hover{
   background: rgb(214, 182, 1);
+}
+
+p.redirect{
+  font-size: 0.8rem;
+  color: rgb(117, 117, 117);
+}
+p.redirect a{
+  color: rgb(0, 116, 151);
+}
+
+div.success, div.failure{
+  text-align: center;
+}
+div.success h3{
+  color: green;
+}
+div.failure h3{
+  color: crimson;
 }
