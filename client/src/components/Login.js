@@ -29,9 +29,15 @@ function Login() {
         body: JSON.stringify(data)
         })
         .then((result) => result.json())
-        .then((info) => { (info.hasOwnProperty("message") ? setErrors(info) : history.push("/welcome") )})
+        .then((info) => { 
+          if(info.hasOwnProperty("message")){
+            setErrors(info);
+          } else {
+            localStorage.setItem("token", info.token)
+            history.push("/welcome");
+          }
+        })
   }
-
   return (
     <div>
       <h1>Login</h1>
@@ -49,7 +55,6 @@ function Login() {
       </form>
       <p className="redirect">No account yet? <Link exact={true} to="/">Signup</Link></p>
     </div>
-    
   );
 }
 

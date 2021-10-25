@@ -80,7 +80,7 @@ p.redirect a{
   color: rgb(0, 116, 151);
 }
 
-div.success, div.failure{
+div.success, div.failure, div.welcome{
   text-align: center;
 }
 div.success h3{

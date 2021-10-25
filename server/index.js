@@ -1,13 +1,16 @@
-require('dotenv').config({ path: "./server/db.env"});
+require('dotenv').config({ path: "./server/system.env"});
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const mongoose = require('mongoose');
 const { stringify } = require('querystring');
+
+const mongoose = require('mongoose');
 const User = require('./models/user');
+
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+const jwt = require('jsonwebtoken');
 
 const PORT = process.env.PORT || 3001;
 
@@ -27,6 +30,23 @@ const dbURI = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWOR
 mongoose.connect(dbURI, {useNewUrlParser: true})
     .then((result) => {app.listen(PORT, () => {console.log(`Server listening on ${PORT}`);});})
     .catch((err) => {console.log(err);})
+
+//verify jwt token
+const verifyJWT = (req, res, next) => {
+    const token = req.headers["x-access-token"];
+    if (!token){
+        res.json({message: "You need to send access token"})
+    } else{
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if(err){
+                res.json({message: "Invalid or expired access token"})
+            } else{
+                req.userId = decoded.id;
+                next()
+            }
+        })
+    }
+}
 
 
 //Signup form submit
@@ -78,13 +98,27 @@ app.post("/login", (req, res) => {
                     } else if(!result){
                         res.json({message: "Incorrect username/password combination"})
                     } else{
-                        res.json(data[0]);
+                        const id = data[0].id;
+                        const token = jwt.sign({id}, process.env.JWT_SECRET, {
+                            expiresIn: 300,
+                        })
+                        res.json({token: token});
                     }
                 });
             }
         }
     })
     
+})
+
+app.get("/userInfo", verifyJWT, (req, res) => {
+    User.find({_id: req.userId}, (err, data) => {
+        if(err){
+            console.log(err);
+        }else{
+            res.json({name: data[0].name, email: data[0].email})
+        }
+    })
 })
 
 // All other GET requests not handled before will return our React app
