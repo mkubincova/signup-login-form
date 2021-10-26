@@ -8,11 +8,6 @@ body {
   box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .App{
   margin: 40px auto;
   padding: 30px 50px;
@@ -26,9 +21,11 @@ h1{
   margin-top: 0;
   color: rgb(0, 116, 151);
 }
+
 form, div.success, div.failure, div.welcome{
   min-width: 250px;
 }
+
 input{
   width: calc(100% - 10px);
   display: block;
@@ -52,6 +49,7 @@ label{
   color: rgb(0, 116, 151);
   font-size: 0.8rem;
 }
+
 small{
   color: crimson;
   font-size: 0.6rem;
@@ -88,4 +86,7 @@ div.success h3{
 }
 div.failure h3{
   color: crimson;
+}
+div.welcome h3{
+  color: rgb(0, 116, 151);
 }

@@ -12,6 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
+        {/* serve different components based on path */}
         <Route exact path="/" component={Signup} />
         <Route path="/login" component={Login} />
         <Route path="/success" component={Success} />

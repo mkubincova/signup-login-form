@@ -10,6 +10,7 @@ function Signup() {
   const [password, setPassword] = React.useState("");
   const [errors, setErrors] = React.useState({});
 
+  //keep tract of input field values
   const handleChange = (e) => {
     let field = e.target.id;
     let value = e.target.value;
@@ -22,13 +23,17 @@ function Signup() {
     } 
   }
 
+  //submit form
   const handleSubmit = (e) => {
     e.preventDefault();
+    //get data from hooks
     const data = { name: name, email: email , password: password }
-    const inputErr = validate(data)
 
+    //valide data in external funtion
+    const inputErr = validate(data)
     var isEmpty = Object.entries(inputErr).length === 0;
 
+    //if data is correct send request to backend, otherwise display error
     if(!isEmpty){
         setErrors(inputErr)
     } else{
@@ -39,6 +44,7 @@ function Signup() {
             body: JSON.stringify(data)
             })
             .then((result) => result.json())
+            //load page based on req success
             .then((info) => { (info.message === "Success") ? history.push("/success") : history.push("/failure"); })
             
     }
