@@ -1,4 +1,4 @@
-Registration and login system build with React, Node and mongoDB + JWT authorization | | | deployed at: https://signup-login-form.herokuapp.com
+Registration and login system build with React, Node and mongoDB + JWT authorization
 
 ## Install dependencies
 run "npm install" in root directory<br>
